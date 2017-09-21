@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace zork
+namespace Avenged
 {
     class Program
     {
