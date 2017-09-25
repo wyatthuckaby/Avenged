@@ -8,6 +8,6 @@ namespace zork {
         void hit(string enemy);
         void eat();
 
-        void Use(ref IRoom room);
+        void Use();
     }
 }

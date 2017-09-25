@@ -4,8 +4,10 @@ using System.Collections.Generic;
 namespace zork {
     public class Player{
         List <IRoom> map  = new List<IRoom>();
+        List <IItem> inventory = new List<IItem>();
         int currentMap = -1; //heh how neat is that
 
+        int health = 100;
         public void RenderMap(){
             Console.WriteLine(currentMap.ToString());
             Console.Clear();
@@ -32,6 +34,12 @@ namespace zork {
             currentMap++;
             RenderMap();
         }
+        public void UnlockDungeon(){
+            if (map[currentMap].Name == "Dungeon" && inventory.FindIndex(x => x.name == "Key for a dungeon") != -1){
+                map[currentMap].wayOut = Direction.NORTH;
+                Console.WriteLine("A wall falls into rubble to your north.");
+            }
+        }
         public void LoadPreviousMap(){
             currentMap--;
             RenderMap();     
@@ -50,8 +58,6 @@ namespace zork {
             } else {
                 Console.WriteLine("You slam your head into a wall.");
             }
-
-
         }
         /**
         ProcCommand:
@@ -70,8 +76,7 @@ namespace zork {
                     Console.WriteLine("g or go ------------ Moves player in specified direction");
                     Console.WriteLine("u or use ----------- Uses a specified item from your inventory");
                     Console.WriteLine("e or eat ----------- Eat a specified item");
-                    Console.WriteLine("a or attack -------- Attack with specified item");
-                    Console.WriteLine("p or pickup -------- Picks up the items in the room");
+                    Console.WriteLine("t or take -------- Picks up the items in the room");
                 }
                 break;
                 case 'g':
@@ -102,6 +107,34 @@ namespace zork {
                         break;
                     }
                 }
+                break;
+                case 'u':
+                {
+                    string item = command.Substring(command.IndexOf(' ') +1);
+                    if (item == "Dungeon Key"){
+                        UnlockDungeon();
+                        break;
+                    }
+                    var i = inventory.Find(x => x.name == item);
+                    i.Use();
+                    
+                }
+                break;
+                case 'e': {
+                    string item = command.Substring(command.LastIndexOf(' ') +1);
+                    inventory.Find(x => x.name == item).eat();
+                    health -= inventory.Find(x => x.name == item).health;
+                    if (health <= 0){
+                        Console.WriteLine("You died!");
+                        return true;
+                    }
+                }
+                break;
+                case 't': {
+                    string item = command.Substring(command.IndexOf(' ') +1);
+                    inventory.Add(map[currentMap].items.Find(x => x.name == item));
+                    Console.WriteLine($"You took an item! ");
+                }  
                 break;
             }
             return false;

@@ -19,16 +19,17 @@ namespace zork{
             Console.WriteLine("It bounces off the wall and hits you square in the forhead. Ow.");
         }
 
-        public void Use(ref IRoom room)
+        public void Use()
+
         {
-            room.wayOut = Direction.NORTH;
+            
         }
 
         public DungeonKey(){
             damage = 0;
             health = -100;
             prop = "a";
-            name = "Key for a dungeon";
+            name = "Dungeon Key";
         }
     }
 }
