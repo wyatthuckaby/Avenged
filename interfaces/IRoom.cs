@@ -4,13 +4,10 @@ namespace zork{
     interface IRoom
     {
         string Name {get; set;}
-        
-        List<IItem> items {get; set;}
-        IRoom East {get; set;}
-        IRoom West {get; set;}
-        IRoom South {get;set;}
-        IRoom North {get;set;}
+        string Text {get; set;}
+        List<IItem> items {get; set;} 
 
-        void Start();
+        Direction wayIn {get; set;}
+        Direction wayOut {get; set;}
     }
 }
