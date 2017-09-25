@@ -22,7 +22,7 @@ namespace zork{
         public void Use()
 
         {
-            
+            Console.WriteLine("Used");
         }
 
         public DungeonKey(){

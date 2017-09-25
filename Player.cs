@@ -111,13 +111,14 @@ namespace zork {
                 case 'u':
                 {
                     string item = command.Substring(command.IndexOf(' ') +1);
-                    if (item == "Dungeon Key"){
+                    //Console.WriteLine(item);
+                    if (item == "dungeon key"){
                         UnlockDungeon();
                         break;
                     }
-                    var i = inventory.Find(x => x.name == item);
-                    i.Use();
+                    IItem i = inventory.Find(x => x.name == item);
                     
+                    System.Console.WriteLine(i);
                 }
                 break;
                 case 'e': {
@@ -129,6 +130,7 @@ namespace zork {
                         return true;
                     }
                 }
+                
                 break;
                 case 't': {
                     string item = command.Substring(command.IndexOf(' ') +1);
